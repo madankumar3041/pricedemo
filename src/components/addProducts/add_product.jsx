@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Form, Item } from "semantic-ui-react";
-import { Segment } from "semantic-ui-react";
-
+import { Form } from "semantic-ui-react";
 import SearchCard from "./SearchCard/searchCard";
 import "./SearchCard/Styles.css";
-
+import axios from "axios";
 import data from "../data.json";
 
 export function AddProduct() {
@@ -32,45 +29,27 @@ export function AddProduct() {
     window.location.href = link;
   };
   const searchProduct = (download = false) => {
-    console.log(formData);
-    console.log(data);
-    //   const formingData = new FormData();
-    //   formingData.append("productName",formData.pincode);
-    //   formingData.append(" pincode",formData.name);
-    //   formingData.append("city",formData.city);
-    //   formingData.append("product_sku",formData.productsku);
-    //   formingData.append("productCop",formData.companyprice);
-    //   formingData.append(" productMrp",formData.mrpprice);
-    //  formingData.append("ean_id",formData.EanId);
-    //  formingData.append("asin",formData.Asin);
-    //   formingData.append("productName",formData.name);
-    const payload ={
-      productName: formData.name,
-      pincode: formData.pincode,
-      city: formData.city,
-      product_sku: formData.productsku,
-      productCop: formData.companyprice,
-      productMrp: formData.mrpprice,
-      ean_id: formData.EanId,
-      asin: formData.Asin,
-      grofer_id: formData.groferId,
-    };
+    const formingData = new FormData();
+    formingData.append("grofer_id", formData.groferId);
+    formingData.append("pincode", formData.pincode);
+    formingData.append("city", formData.city);
+    formingData.append("product_sku", formData.productsku);
+    formingData.append("productCop", formData.companyprice);
+    formingData.append("productMrp", formData.mrpprice);
+    formingData.append("ean_id", formData.EanId);
+    formingData.append("asin", formData.Asin);
+    formingData.append("productName", formData.name);
+    formingData.append(" jiomart_id",formData.JioId);
     setLoading(true);
-    fetch("https://marketrate.infoware.xyz/priceprediction/v2/", {
-      crossDomain:true,
+    axios({
       method: "POST",
-      headers: {
-        'Accept': "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+      url: "https://marketrate.infoware.xyz/priceprediction/v2/",
+      data: formingData,
     })
-      .then((response) => response.json())
       .then((data) => {
         debugger;
         console.log("Success:", data);
-        setResponseData(data);
-        // window.location.href = "#/searchedResult";
+        setResponseData(data?.data);
         if (download) {
           downloadcsvfile();
         }
@@ -86,55 +65,25 @@ export function AddProduct() {
       [event.target.name]: event.target.value,
     }));
   };
-  // const handleDDChange = (event) => {
-  //   debugger;
-  //   setData((prevState) => ({
-  //     ...prevState,
-  //     [event.target.name]: event.target.value,
-  //   }));
+  const handleDDChange = (event) => {
+    debugger;
+    setData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
 
-  //   const filteredData = data.filter((item) => item.name == event.target.value);
+    const filteredData = data.filter((item) => item.name == event.target.value);
 
-  //   setData(filteredData[0]);
-  // };
-  // if (
-  //   responseData?.data?.data?.amazon_data?.products?.product_price ||
-  //   responseData?.data?.data?.bb_data?.products?.product_price ||
-  //   responseData?.data?.data?.grofer_data?.products?.product_price ||
-  //   responseData?.data?.jio_data?.products?.product_price
-  // ) {
-  //   const res = responseData?.data?.amazon_data?.products?.product_price.match(/(\d+)/);
-  //   const res1 = responseData?.data?.bb_data?.products?.product_price.match(/(\d+)/);
-  //   const res2 = responseData?.data?.grofer_data?.products?.product_price.match( /(\d+)/);
-  //   const res3 = responseData?.data?.jio_data?.products?.product_price.match(/(\d+)/);
-
-  //   if (res?.length || res1?.length || res2?.length || res3?.length) {
-  //     var res_data = [];
-  //     res_data.push(res != null ? res[0] : null);
-  //     res_data.push(res1 != null ? res1[0] : null);
-  //     res_data.push(res2 != null ? res2[0] : null);
-  //     res_data.push(res3 != null ? res3[0] : null);
-  //     // res_data.push(res,res1,res2,res3);
-  //   }
-  //   var min = Math.min(...res_data?.filter((item) => item));
-  //   console.log(min);
-  // }
+    setData(filteredData[0]);
+  };
   return (
     <div>
-      {/* <Segment inverted color="blue">
-        <Link className="company-logo"style={{ color: "white", float: "left" }} to="/">
-        Price Tracker and Recommendation Tool
-        </Link>
-        <img
+      {/* <img
           src="https://www.fwpgroup.co.uk/wp-content/uploads/2020/03/male-profile-icon-white-on-the-blue-background-vector-3451989.jpg"
           style={{ position: "relative", bottom: "12px" }}
           className="ui mini right floated image"
           alt=" "
-        />
-        <Link style={{ color: "white", float: "right" }} to="#">
-          My Account
-        </Link>
-      </Segment> */}
+        /> */}
       <div className="navbar">
         <ul>
           <li>
@@ -165,13 +114,13 @@ export function AddProduct() {
                     <form class="ui form" onSubmit={(e) => e.preventDefault()}>
                       <div class="field">
                         <label>Product Name</label>
-                        <input
+                        {/* <input
                           type="text"
                           name="name"
                           placeholder="Enter product Name"
                           onChange={handleChange}
-                        />
-                        {/* <select
+                        /> */}
+                        <select
                           custom
                           name="name"
                           id="select"
@@ -195,7 +144,7 @@ export function AddProduct() {
                           <option value="Fortune Gujarati superfood khichdi 200 gm">
                             Fortune Gujarati superfood khichdi 200 gm
                           </option>
-                        </select> */}
+                        </select>
                       </div>
                       <div class="field">
                         <label> Product Code</label>
@@ -211,7 +160,7 @@ export function AddProduct() {
                           type="text"
                           name="productsku"
                           placeholder="Enter product sku"
-                          // value={formData.productsku}
+                          value={formData.productsku}
                           onChange={handleChange}
                         />
                       </div>
@@ -222,7 +171,7 @@ export function AddProduct() {
                           type="text"
                           name="EanId"
                           placeholder="Enter EAN number"
-                          // value={formData.EanId}
+                          value={formData.EanId}
                           onChange={handleChange}
                         />
                         <Form.Input
@@ -232,7 +181,7 @@ export function AddProduct() {
                           type="text"
                           name="Asin"
                           onChange={handleChange}
-                          // value={formData.Asin}
+                          value={formData.Asin}
                         />
                       </Form.Group>
                       <div class="field">
@@ -242,17 +191,27 @@ export function AddProduct() {
                           name="groferId"
                           placeholder="Enter Grofer Id"
                           onChange={handleChange}
-                          // value={formData.groferId}
+                          value={formData.groferId}
                         />
                       </div>
                       <div class="field">
+                        <label>Jio Id</label>
+                        <input
+                          type="text"
+                          name="JioId"
+                          placeholder="Enter Jio Id"
+                          onChange={handleChange}
+                          value={formData.JioId}
+                        />
+                      </div>
+                      {/* <div class="field">
                         <label>Brand</label>
                         <input
                           type="text"
                           name="code"
                           placeholder="Enter brand"
                         />
-                      </div>
+                      </div> */}
                       <Form.Group widths="equal">
                         <Form.Input
                           fluid
@@ -260,7 +219,7 @@ export function AddProduct() {
                           type="number"
                           name="companyprice"
                           placeholder="Enter company offer price"
-                          // value={formData.companyprice}
+                          value={formData.companyprice}
                           onChange={handleChange}
                         />
                         <Form.Input
@@ -269,7 +228,7 @@ export function AddProduct() {
                           placeholder="Enter MRP"
                           type="number"
                           name="mrpprice"
-                          // value={formData.mrpprice}
+                          value={formData.mrpprice}
                           onChange={handleChange}
                         />
                       </Form.Group>
@@ -280,7 +239,7 @@ export function AddProduct() {
                           type="text"
                           name="city"
                           placeholder="Enter city"
-                          // value={formData.city}
+                          value={formData.city}
                           onChange={handleChange}
                         />
                         <Form.Input
@@ -289,7 +248,7 @@ export function AddProduct() {
                           type="number"
                           name="pincode"
                           placeholder="Enter pincode"
-                          // value={formData.pincode}
+                          value={formData.pincode}
                           onChange={handleChange}
                         />
                       </Form.Group>
@@ -422,15 +381,6 @@ export function AddProduct() {
             Recommended price(Lowest Price) = Rs{" "}
             {responseData?.recommended_price}
           </div>
-          {/* <Button
-            primary
-            onClick={() =>
-              //  exportTableToCSV('Searched Products.csv')
-              downloadcsvfile()
-            }
-          >
-            Export To CSV
-          </Button> */}
         </div>
       ) : (
         <h1>No Search Result Found...</h1>
