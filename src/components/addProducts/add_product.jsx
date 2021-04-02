@@ -39,7 +39,8 @@ export function AddProduct() {
     formingData.append("ean_id", formData.EanId);
     formingData.append("asin", formData.Asin);
     formingData.append("productName", formData.name);
-    formingData.append(" jiomart_id",formData.JioId);
+    formingData.append(" jiomart_id", formData.JioId);
+    formingData.append("Fsn_id", formData.FlipkartFSN);
     setLoading(true);
     axios({
       method: "POST",
@@ -204,6 +205,16 @@ export function AddProduct() {
                           value={formData.JioId}
                         />
                       </div>
+                      <div class="field">
+                        <label>Flipkart FSN No</label>
+                        <input
+                          type="text"
+                          name="FlipkartFSN"
+                          placeholder="Enter flipkart FSN No"
+                          onChange={handleChange}
+                          value={formData.FlipkartFSN}
+                        />
+                      </div>
                       {/* <div class="field">
                         <label>Brand</label>
                         <input
@@ -330,7 +341,8 @@ export function AddProduct() {
       responseData?.data?.amazon_data?.products ||
         responseData?.data?.bb_data?.products ||
         responseData?.data?.grofer_data?.products ||
-        responseData?.data?.jio_data?.products ? (
+        responseData?.data?.jio_data?.products ||
+        responseData?.data?.flipkart_data?.products ? (
         <div class="row">
           <table class="content-table">
             <thead class="thead-light">
@@ -341,6 +353,7 @@ export function AddProduct() {
                 <th scope="col">BigBasket</th>
                 <th scope="col">Jio Mart</th>
                 <th scope="col">Grofers</th>
+                <th scope="col">Flipkart</th>
                 <th scope="col">Company Online </th>
               </tr>
             </thead>
@@ -372,6 +385,11 @@ export function AddProduct() {
                     <SearchCard
                       data={responseData?.data?.grofer_data?.products}
                     />
+                  ) : null}
+                </td>
+                <td className="">
+                  {responseData?.data?.flipkart_data ? (
+                    <SearchCard data={responseData?.data?.flipkart_data?.products} />
                   ) : null}
                 </td>
               </tr>

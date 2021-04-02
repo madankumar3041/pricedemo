@@ -9,7 +9,6 @@
   margin: 25px 0;
   font-size: 0.9em;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  width: -webkit-fill-available;
 }
 
 .content-table thead tr {
@@ -45,7 +44,7 @@ th {
 }
 .row {
   height: 647px;
-  /* overflow-x: auto; */
+  overflow-x: auto;
 }
 .table-dash {
   text-align: initial;
@@ -63,7 +62,7 @@ th {
   background-image: url("../../../Common/images/background-image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 905px;
+  height: 975px;
 }
 
 .page-login {
