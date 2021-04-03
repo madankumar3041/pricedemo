@@ -39,8 +39,8 @@ export function AddProduct() {
     formingData.append("ean_id", formData.EanId);
     formingData.append("asin", formData.Asin);
     formingData.append("productName", formData.name);
-    formingData.append(" jiomart_id", formData.JioId);
-    formingData.append("Fsn_id", formData.FlipkartFSN);
+    formingData.append("jiomart_id", formData.JioId);
+    formingData.append("fsn_id", formData.FlipkartFSN);
     setLoading(true);
     axios({
       method: "POST",
@@ -115,13 +115,13 @@ export function AddProduct() {
                     <form class="ui form" onSubmit={(e) => e.preventDefault()}>
                       <div class="field">
                         <label>Product Name</label>
-                        {/* <input
+                        <input
                           type="text"
                           name="name"
                           placeholder="Enter product Name"
                           onChange={handleChange}
-                        /> */}
-                        <select
+                        />
+                        {/* <select
                           custom
                           name="name"
                           id="select"
@@ -145,7 +145,7 @@ export function AddProduct() {
                           <option value="Fortune Gujarati superfood khichdi 200 gm">
                             Fortune Gujarati superfood khichdi 200 gm
                           </option>
-                        </select>
+                        </select> */}
                       </div>
                       <div class="field">
                         <label> Product Code</label>
@@ -161,7 +161,7 @@ export function AddProduct() {
                           type="text"
                           name="productsku"
                           placeholder="Enter product sku"
-                          value={formData.productsku}
+                          // value={formData.productsku}
                           onChange={handleChange}
                         />
                       </div>
@@ -172,7 +172,7 @@ export function AddProduct() {
                           type="text"
                           name="EanId"
                           placeholder="Enter EAN number"
-                          value={formData.EanId}
+                          // value={formData.EanId}
                           onChange={handleChange}
                         />
                         <Form.Input
@@ -182,7 +182,7 @@ export function AddProduct() {
                           type="text"
                           name="Asin"
                           onChange={handleChange}
-                          value={formData.Asin}
+                          // value={formData.Asin}
                         />
                       </Form.Group>
                       <div class="field">
@@ -192,7 +192,7 @@ export function AddProduct() {
                           name="groferId"
                           placeholder="Enter Grofer Id"
                           onChange={handleChange}
-                          value={formData.groferId}
+                          // value={formData.groferId}
                         />
                       </div>
                       <div class="field">
@@ -202,7 +202,7 @@ export function AddProduct() {
                           name="JioId"
                           placeholder="Enter Jio Id"
                           onChange={handleChange}
-                          value={formData.JioId}
+                          // value={formData.JioId}
                         />
                       </div>
                       <div class="field">
@@ -212,7 +212,7 @@ export function AddProduct() {
                           name="FlipkartFSN"
                           placeholder="Enter flipkart FSN No"
                           onChange={handleChange}
-                          value={formData.FlipkartFSN}
+                          // value={formData.FlipkartFSN}
                         />
                       </div>
                       {/* <div class="field">
@@ -230,7 +230,7 @@ export function AddProduct() {
                           type="number"
                           name="companyprice"
                           placeholder="Enter company offer price"
-                          value={formData.companyprice}
+                          // value={formData.companyprice}
                           onChange={handleChange}
                         />
                         <Form.Input
@@ -239,7 +239,7 @@ export function AddProduct() {
                           placeholder="Enter MRP"
                           type="number"
                           name="mrpprice"
-                          value={formData.mrpprice}
+                          // value={formData.mrpprice}
                           onChange={handleChange}
                         />
                       </Form.Group>
@@ -250,7 +250,7 @@ export function AddProduct() {
                           type="text"
                           name="city"
                           placeholder="Enter city"
-                          value={formData.city}
+                          // value={formData.city}
                           onChange={handleChange}
                         />
                         <Form.Input
@@ -259,7 +259,7 @@ export function AddProduct() {
                           type="number"
                           name="pincode"
                           placeholder="Enter pincode"
-                          value={formData.pincode}
+                          // value={formData.pincode}
                           onChange={handleChange}
                         />
                       </Form.Group>
